@@ -15,23 +15,41 @@ public class Board {
 		return rows;
 	}
 
-	public void setRows(int rows) {
-		this.rows = rows;
-	}
-
 	public int getColumns() {
 		return columns;
 	}
-
-	public void setColumns(int columns) {
-		this.columns = columns;
-	}
 	
 	public Piece getPiece(int row, int column) {
+		if(!positionExists(row, column)) {
+			throw new BoardException("Posição inválida: " + row + "," + column);
+		}
 		return pieces[row][column];
 	}
 	
-	public Piece getPiece(Position p) {
-		return pieces[p.getRow()][p.getColumn()];
+	public Piece getPiece(Position position) {
+		return pieces[position.getRow()][position.getColumn()];
+	}
+	
+	public void placePiece(Piece piece, Position position) {
+		if(isPlaced(position)) {
+			throw new BoardException("Posição ocupada: " + position.getRow() + "," + position.getColumn());
+		}
+		pieces[position.getRow()][position.getColumn()] = piece;
+		piece.position = position;
+	}
+	
+	public boolean positionExists(Position position) {
+		return positionExists(position.getRow(), position.getColumn());
+	}
+	
+	private boolean positionExists(int row, int column) {
+		return row >= 0 && row < rows && column >= 0 && column < columns;
+	}
+	
+	public boolean isPlaced(Position position) {
+		if(!positionExists(position.getRow(), position.getColumn())) {
+			throw new BoardException("Posição inválida: " + position.getRow() + "," + position.getColumn());
+		}
+		return getPiece(position) != null;
 	}
 }
