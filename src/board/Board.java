@@ -21,7 +21,7 @@ public class Board {
 	
 	public Piece getPiece(int row, int column) {
 		if(!positionExists(row, column)) {
-			throw new BoardException("Posição inválida: " + row + "," + column);
+			throw new BoardException("Posicao invalida: " + row + "," + column);
 		}
 		return pieces[row][column];
 	}
@@ -32,7 +32,7 @@ public class Board {
 	
 	public void placePiece(Piece piece, Position position) {
 		if(isPlaced(position)) {
-			throw new BoardException("Posição ocupada: " + position.getRow() + "," + position.getColumn());
+			throw new BoardException("Posicao ocupada: " + position.getRow() + "," + position.getColumn());
 		}
 		pieces[position.getRow()][position.getColumn()] = piece;
 		piece.position = position;
@@ -40,7 +40,7 @@ public class Board {
 	
 	public Piece removePiece(Position position) {
 		if(!positionExists(position)) {
-			throw new BoardException("Posição inválida: " + position.getRow() + "," + position.getColumn());
+			throw new BoardException("Posicao invalida: " + position.getRow() + "," + position.getColumn());
 		}
 		if(getPiece(position) == null) {
 			return null;
@@ -62,7 +62,7 @@ public class Board {
 	
 	public boolean isPlaced(Position position) {
 		if(!positionExists(position.getRow(), position.getColumn())) {
-			throw new BoardException("Posição inválida: " + position.getRow() + "," + position.getColumn());
+			throw new BoardException("Posicao invalida: " + position.getRow() + "," + position.getColumn());
 		}
 		return getPiece(position) != null;
 	}
