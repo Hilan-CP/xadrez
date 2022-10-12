@@ -38,6 +38,20 @@ public class Board {
 		piece.position = position;
 	}
 	
+	public Piece removePiece(Position position) {
+		if(!positionExists(position)) {
+			throw new BoardException("Posição inválida: " + position.getRow() + "," + position.getColumn());
+		}
+		if(getPiece(position) == null) {
+			return null;
+		}
+		
+		Piece temp = getPiece(position);
+		temp.position = null;
+		pieces[position.getRow()][position.getColumn()] = null;
+		return temp;
+	}
+	
 	public boolean positionExists(Position position) {
 		return positionExists(position.getRow(), position.getColumn());
 	}
