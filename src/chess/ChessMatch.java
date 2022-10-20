@@ -7,6 +7,7 @@ import board.Board;
 import board.Piece;
 import board.Position;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Rook;
 
 public class ChessMatch {
@@ -112,7 +113,8 @@ public class ChessMatch {
 	}
 	
 	private Piece move(Position source, Position target) {
-		Piece p = board.removePiece(source);
+		ChessPiece p = (ChessPiece) board.removePiece(source);
+		p.increaseMoveCount();
 		Piece capturedPiece = board.removePiece(target);
 		board.placePiece(p, target);
 		if(capturedPiece != null) {
@@ -123,7 +125,8 @@ public class ChessMatch {
 	}
 	
 	private void undoMove(Position source, Position target, Piece capturedPiece) {
-		Piece p = board.removePiece(target);
+		ChessPiece p = (ChessPiece) board.removePiece(target);
+		p.descreaseMoveCount();
 		board.placePiece(p, source);
 		if(capturedPiece != null) {
 			board.placePiece(capturedPiece, target);
@@ -199,6 +202,25 @@ public class ChessMatch {
 	}
 	
 	public void initialSetup() {
+		placeChessPiece('a', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('b', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('c', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('d', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('e', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('f', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('g', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('h', 7, new Pawn(board, Color.BLACK));
+		
+		placeChessPiece('a', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('b', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('c', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('d', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('e', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('f', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('g', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('h', 2, new Pawn(board, Color.WHITE));
+		
+		
 		placeChessPiece('a', 8, new Rook(board, Color.BLACK));
 		placeChessPiece('h', 8, new Rook(board, Color.BLACK));
 		placeChessPiece('e', 8, new King(board, Color.BLACK));
