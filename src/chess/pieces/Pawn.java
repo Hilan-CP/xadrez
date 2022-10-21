@@ -33,6 +33,7 @@ public class Pawn extends ChessPiece {
 				}
 			}
 			
+			//captura
 			p.setValues(position.getRow() - 1, position.getColumn() - 1);
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {
 				m[p.getRow()][p.getColumn()] = true;
@@ -55,6 +56,7 @@ public class Pawn extends ChessPiece {
 				}
 			}
 			
+			//captura
 			p.setValues(position.getRow() + 1, position.getColumn() - 1);
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {
 				m[p.getRow()][p.getColumn()] = true;

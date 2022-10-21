@@ -6,6 +6,7 @@ import java.util.List;
 import board.Board;
 import board.Piece;
 import board.Position;
+import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Rook;
@@ -210,6 +211,8 @@ public class ChessMatch {
 		placeChessPiece('f', 7, new Pawn(board, Color.BLACK));
 		placeChessPiece('g', 7, new Pawn(board, Color.BLACK));
 		placeChessPiece('h', 7, new Pawn(board, Color.BLACK));
+		placeChessPiece('c', 8, new Bishop(board, Color.BLACK));
+		placeChessPiece('f', 8, new Bishop(board, Color.BLACK));
 		
 		placeChessPiece('a', 2, new Pawn(board, Color.WHITE));
 		placeChessPiece('b', 2, new Pawn(board, Color.WHITE));
@@ -219,6 +222,8 @@ public class ChessMatch {
 		placeChessPiece('f', 2, new Pawn(board, Color.WHITE));
 		placeChessPiece('g', 2, new Pawn(board, Color.WHITE));
 		placeChessPiece('h', 2, new Pawn(board, Color.WHITE));
+		placeChessPiece('c', 1, new Bishop(board, Color.WHITE));
+		placeChessPiece('f', 1, new Bishop(board, Color.WHITE));
 		
 		
 		placeChessPiece('a', 8, new Rook(board, Color.BLACK));
