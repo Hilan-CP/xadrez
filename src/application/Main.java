@@ -36,6 +36,16 @@ public class Main {
 				if(capturedPiece != null) {
 					captured.add(capturedPiece);
 				}
+				
+				if(chess.getPromoted() != null) {
+					System.out.print("Escolha uma peca para a promocao (Q/R/H/B): ");
+					String type = scan.nextLine().toUpperCase();
+					while(!type.equals("Q") && !type.equals("H") && !type.equals("B") && !type.equals("R")) {
+						System.out.print("Escolha uma peca para a promocao (Q/R/H/B): ");
+						type = scan.nextLine().toUpperCase();
+					}
+					chess.replacePromotedPiece(type);
+				}
 			}
 			catch(ChessException e) {
 				System.out.println(e.getMessage());

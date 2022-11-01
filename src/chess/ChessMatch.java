@@ -20,6 +20,7 @@ public class ChessMatch {
 	private boolean check;
 	private boolean checkMate;
 	private ChessPiece enPassantVulnerable;
+	private ChessPiece promoted;
 	
 	private List<Piece> piecesOnTheBoard = new ArrayList<>();
 	private List<Piece> capturedPieces = new ArrayList<>();
@@ -52,6 +53,10 @@ public class ChessMatch {
 		return enPassantVulnerable;
 	}
 	
+	public ChessPiece getPromoted() {
+		return promoted;
+	}
+	
 	public ChessPiece[][] getPieces(){
 		ChessPiece[][] pieces = new ChessPiece[board.getRows()][board.getColumns()];
 		for(int i = 0; i < board.getRows(); ++i) {
@@ -80,6 +85,17 @@ public class ChessMatch {
 			throw new ChessException("Voce nao pode ficar em xeque");
 		}
 		
+		ChessPiece movedPiece = (ChessPiece) board.getPiece(target);
+		
+		//promotion
+		promoted = null;
+		if(movedPiece instanceof Pawn) {
+			if((movedPiece.getColor() == Color.WHITE && target.getRow() == 0) || (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+				promoted = (ChessPiece) board.getPiece(target);
+				promoted = replacePromotedPiece("Q");
+			}
+		}
+		
 		if(isChecked(opponent(currentPlayer))) {
 			check = true;
 		}
@@ -95,7 +111,6 @@ public class ChessMatch {
 		}
 		
 		//En Passant
-		ChessPiece movedPiece = (ChessPiece) board.getPiece(target);
 		if(movedPiece instanceof Pawn && (target.getRow() == source.getRow() -2 || target.getRow() == source.getRow() +2)) {
 			enPassantVulnerable = movedPiece;
 		}
@@ -104,6 +119,39 @@ public class ChessMatch {
 		}
 		
 		return (ChessPiece) capturedPiece;
+	}
+	
+	public ChessPiece replacePromotedPiece(String type) {
+		if(promoted == null) {
+			throw new IllegalStateException("Nenhuma peca a ser promovida");
+		}
+		
+		Position position = promoted.getChessPosition().toPosition();
+		Piece piece = board.removePiece(position);
+		piecesOnTheBoard.remove(piece);
+		ChessPiece newPiece = null;
+		
+		switch(type) {
+			case "Q":
+				newPiece = new Queen(board, promoted.getColor());
+				break;
+			case "R":
+				newPiece = new Rook(board, promoted.getColor());
+				break;
+			case "H":
+				newPiece = new Knight(board, promoted.getColor());
+				break;
+			case "B":
+				newPiece = new Bishop(board, promoted.getColor());
+				break;
+			default:
+				return promoted;
+		}
+		
+		board.placePiece(newPiece, position);
+		piecesOnTheBoard.add(newPiece);
+		
+		return newPiece;
 	}
 	
 	private void placeChessPiece(char column, int row, ChessPiece piece) {
